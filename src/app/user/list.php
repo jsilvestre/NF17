@@ -40,6 +40,6 @@
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<li><a href="index.php?page=./user/creation">Creation utilisateur</a></li>
+		<li><a href="index.php?page=user/creation">Création utilisateur</a></li>
 	</ul>
 </div>
