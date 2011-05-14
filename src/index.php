@@ -46,9 +46,10 @@ ob_end_clean();
 	<div id="header">
 		<h1>CRM</h1>
 		<a href="index.php">Accueil</a> - 
-		<a href="index.php?page=user/user">Gestion des utilisateurs</a> - 
-		<a href="index.php?page=contact/contact">Gestion des contacts</a> - 
-		<a href="index.php?page=rdv/rdv">Gestion des rendez-vous</a>
+		<a href="index.php?page=user/list">Gestion des utilisateurs</a> - 
+		<a href="index.php?page=contact/list">Gestion des contacts</a> - 
+		<a href="index.php?page=rdv/list">Gestion des rendez-vous</a> - 
+		<a href="index.php?page=firm/list">Gestion des organisations</a>
 	</div>
 	
 	<div id="contenu">
