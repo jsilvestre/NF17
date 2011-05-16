@@ -1,31 +1,53 @@
+		<?php
+		$display="";
+			if ( empty($_GET['id']))
+			{
+			// CREATION DU FORMULAIRE DE CHOIX
+			$display.= "<form method=\"post\" action=\"index.php?page=./contact/modif\">";
+			$display.= "Numero d'identification du contact à modifier : ";
+			$display.= "<select name=\"id\">";
+			
+			// CREATION DE LA REQUETE
+			$req=$db->prepare('SELECT identifiant FROM contact');
+			// Execution de la requete
+			$req->execute();
+			
+			// INSERTION DES LIGNES DANS LE FORMULAIRE
+				while($result = $req->fetch(PDO::FETCH_ASSOC)) {			
+					$display.= "<option value=".$result['identifiant'].">". $result['identifiant']."</option>";
+				}
+			$display.= "</select>	";
+			$display.= "<BR/>";
+			$display.= "<input type=\"submit\" value=\"Valider\" name=\"submit\"/>";
+		}
+		else
+		{
+		
+		$id=$_GET['id'];
+		
+		$req=$db->prepare("select * from contact where identifiant=?");
+		$req->execute(array($id));
+		$result=$req->fetch(PDO::FETCH_ASSOC);
+		$nom=$result['nom'];
+		$id=$result['identifiant'];
+		$prenom=$result['prenom'];
+		$dtn=$result['dateNaissance'];
+		$display.= "<form method=\"post\" action=\"index.php?page=user/modif&id=".$id."\">
+				<p>  Nom d'utilisateur : <input type=\"text\" name=\"login\" /><BR>
+				Nom: <input type=\"text\" name=\"nom\" /> <BR>
+				Prénom : <input type=\"text\" name=\"prenom\" /> <BR>
+				Date de naissance (JJ MM AAAA): <input type=\"text\" name=\"jour\" /> - <input type=\"text\" name=\"mois\" /> - <input type=\"text\" name=\"an\" /> <BR>
+				Numéro de sécurité sociale : <input type=\"text\" name=\"numSS\" /> <BR>
+				Mot de passe : <input type=\"text\" name=\"mdp\" /> <BR>
+				<input type=\"submit\" value=\"Valider\" name=\"submit\" />";
+				
+		}
+		?>
+
 <div id="wrapper">
 	<div class="box">
 		<h2>Accueil</h2>
-		
-		<?php
-			// CREATION DU FORMULAIRE DE CHOIX
-			echo " <p> <form method=\"post\" action=\"./app/contact/modif1.php\">";
-			echo "Numero d'identification du contact à modifier : ";
-			echo "<select name=\"id\">";
-			
-			// CONNEXION A LA BASE DE DONNEES
-			mysql_connect('localhost','root','');	
-			mysql_select_db('NF17');
-			
-			// CREATION DE LA REQUETE
-			$query=('SELECT identifiant FROM contact');
-			
-			// INSERTION DES LIGNES DANS LE FORMULAIRE
-			$result=mysql_query($query);
-				if ($result==FALSE)
-					echo "erreur mysql query";
-				while($row = mysql_fetch_row($result)) {			
-					echo "<option value=$row[0]> $row[0]</option>";
-				}
-			echo "</select>	";
-		?>
-		<BR>
-		<input type="submit" value="Valider" />
+		<p> <?php echo $display; ?>
 		</p>
 	</div>
 </div>
