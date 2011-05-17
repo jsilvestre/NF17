@@ -1,8 +1,39 @@
+<?php
+function verifierDate($month, $day, $year) {
+if (checkdate($month, $day, $year) == true)
+{ return 1; }
+else
+{ return -1; }
+}
+
+if(!empty($_POST['submit']))
+{
+// Recuperation des variables
+$login=$_POST['identifiant'];
+$nom=$_POST['nom'];
+$prenom=$_POST['prenom'];
+$jour=$_POST['jour'];
+$mois=$_POST['mois'];
+$an=$_POST['an'];
+$numSS=$_POST['numSS'];
+
+// Verification de la date
+verifierDate($mois,$jour,$an);
+// Creation de la date
+$date=$an.'-'.$mois.'-'.$jour;
+// Creation de la requete
+$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?)');
+// Execution de la requete
+$req->execute(array($identifiant,$numSS,$nom,$prenom,$date));
+$req->closeCursor();
+
+}
+?>
 
 <div id="wrapper">
 	<div class="box">
 		<h2>Fenêtre principale</h2>
-		<form method="post" action="./app/contact/add.php">
+		<form method="post" action="index.php?page=contact/creation">
 			<p>  Nom d'utilisateur : <input type="text" name="login" /><BR>
 			Nom: <input type="text" name="nom" /> <BR>
 			Prénom : <input type="text" name="prenom" /> <BR>

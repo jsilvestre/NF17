@@ -22,25 +22,12 @@
 		}
 		else
 		{
-		
 		$id=$_GET['id'];
 		
-		$req=$db->prepare("select * from contact where identifiant=?");
+		$req=$db->prepare("delete from contact where identifiant=?");
 		$req->execute(array($id));
-		$result=$req->fetch(PDO::FETCH_ASSOC);
-		$nom=$result['nom'];
-		$id=$result['identifiant'];
-		$prenom=$result['prenom'];
-		$dtn=$result['dateNaissance'];
-		$display.= "<form method=\"post\" action=\"index.php?page=user/modif&id=".$id."\">
-				<p>  Nom d'utilisateur : <input type=\"text\" name=\"login\" /><BR>
-				Nom: <input type=\"text\" name=\"nom\" /> <BR>
-				Prénom : <input type=\"text\" name=\"prenom\" /> <BR>
-				Date de naissance (JJ MM AAAA): <input type=\"text\" name=\"jour\" /> - <input type=\"text\" name=\"mois\" /> - <input type=\"text\" name=\"an\" /> <BR>
-				Numéro de sécurité sociale : <input type=\"text\" name=\"numSS\" /> <BR>
-				Mot de passe : <input type=\"text\" name=\"mdp\" /> <BR>
-				<input type=\"submit\" value=\"Valider\" name=\"submit\" />";
-				
+		$display.= "Contact supprimé <BR><BR>";
+		$display.="<a href=index.php?page=./contact/list> Retour </a>";
 		}
 		?>
 
