@@ -15,9 +15,9 @@
 			$req->closeCursor();
 			
 		// Affichage des actions possibles
-			$display2.= "<li><a href=\"index.php?page=./contact/creation\">Creation d'un contact</a></li>";
-			$display2.= "<li><a href=\"index.php?page=./contact/modif\">modification d'un contact (A FAIRE)</a></li>";
-			$display2.= "<li><a href=\"index.php?page=./contact/supprim\">Suppression d'un contact(A FAIRE)</a></li>";
+			$display2.= "<li><a href=\"index.php?page=./rdv/creation\">Creation d'un Rendez-vous</a></li>";
+			$display2.= "<li><a href=\"index.php?page=./rdv/modif\">Modification d'un rendez-vous (A FAIRE)</a></li>";
+			$display2.= "<li><a href=\"index.php?page=./rdv/supprim\">Suppression d'un contact(A FAIRE)</a></li>";
 		}
 		else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 		{
@@ -31,11 +31,11 @@
 		$display.="Date de naissance : ".$result['dateNaissance']."<BR>" ;
 		$display.="Numero de securite sociale : ".$result['numSS']."<BR> <BR><BR><BR>" ;
 		
-		$display.="<a href=index.php?page=./contact/list> Retour </a>";
+		$display.="<a href=index.php?page=./rdv/list> Retour </a>";
 		
 		// Affichage des actions possibles
-			$display2.= "<li><a href=index.php?page=./contact/modif&id=".$id.">Modifier ce contact</a></li>";
-			$display2.= "<li><a href=index.php?page=./contact/suprim&id=".$id.">Supprimer ce contact</a></li>";
+			$display2.= "<li><a href=index.php?page=./rdv/modif&id=".$id.">Modifier ce rendez-vous</a></li>";
+			$display2.= "<li><a href=index.php?page=./rdv/suprim&id=".$id.">Supprimer ce rendez-vous</a></li>";
 		}
 	?>
 
