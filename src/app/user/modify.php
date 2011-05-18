@@ -8,8 +8,7 @@ else
 
 if(!empty($_POST['submit']))
 {
-	
-	// Récuperation des variables
+	// Recuperation des variables
 	$login=$_POST['login'];
 	$nom=$_POST['nom'];
 	$prenom=$_POST['prenom'];
@@ -25,7 +24,7 @@ if(!empty($_POST['submit']))
 	// Creation de la date
 	$date=$an.'-'.$mois.'-'.$jour;
 	// Creation de la requete
-	$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
+	$req=$bdd->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
 	// Execution de la requete
 	$req->execute(array($login,$numSS,$nom,$prenom,$date,$mdp));
 	$req->closeCursor();
@@ -35,7 +34,7 @@ if(!empty($_POST['submit']))
 
 <div id="wrapper">
 	<div class="box">
-		<h2>Fenêtre principale</h2>
+		<h2>Modifier un utilisateur</h2>
 		<form method="post" action="index.php?page=user/creation">
 				<p>Nom d'utilisateur : <input type="text" name="login" /><br />
 				Nom: <input type="text" name="nom" /> <br />
@@ -46,6 +45,7 @@ if(!empty($_POST['submit']))
 				<input type="submit" value="Valider" name="submit" />
 				</p>
 		</form>
+</p>
 	</div>
 </div>
 

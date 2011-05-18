@@ -4,7 +4,7 @@
 			{
 			// CREATION DU FORMULAIRE DE CHOIX
 			$display.= "<form method=\"post\" action=\"index.php?page=./contact/modif\">";
-			$display.= "Numero d'identification du contact à modifier : ";
+			$display.= "Numero d'identification du contact Ã  modifier : ";
 			$display.= "<select name=\"id\">";
 			
 			// CREATION DE LA REQUETE
@@ -26,7 +26,7 @@
 		
 		$req=$db->prepare("delete from contact where identifiant=?");
 		$req->execute(array($id));
-		$display.= "Contact supprimé <BR><BR>";
+		$display.= "Contact supprimÃ© <BR><BR>";
 		$display.="<a href=index.php?page=./contact/list> Retour </a>";
 		}
 		?>
