@@ -11,7 +11,9 @@ if(!empty($_POST['submit']))
 		$min=$_POST['min'];
 		$user=$_POST['user'];
 		$contact=$_POST['contact'];
-		$lieu=$_POST['lieu'];
+		$rue=$_POST['rue'];
+		$cp=$_POST['cp'];
+		$ville=$_POST['ville'];
 		
 		// Creation de la date du rendez vous
 		$date=$an.'-'.$mois.'-'.$jour.' '.$heure.':'.$min.':'.'00' ;
@@ -26,7 +28,7 @@ else // Si le formulaire n'a pas deja ete rempli
 {
 		$display.="<form method=\"post\" action=\"index.php?page=rdv/creation\">";
 		$display.="Date du rendez-vous (JJ MM AAAA): <input type=\"text\" name=\"jour\" /> - <input type=\"text\" name=\"mois\" /> - <input type=\"text\" name=\"an\" /> <BR>";
-		$display.="<p>  Heure du rendez vous : <input type=\"text\" name=\"heure\" /> - <input type=\"text\" name=\"min\" /><BR>";
+		$display.="<p>  Heure du rendez vous : <input type=\"text\" name=\"heure\" /> : <input type=\"text\" name=\"min\" /><BR>";
 		$display.="Utilisateur concerné : ";
 		// Menu deroulant pour la liste des utilisateur
 		$display.= "<select name=\"user\">";
@@ -51,9 +53,17 @@ else // Si le formulaire n'a pas deja ete rempli
 		}
 		$display.="</select>";
 		$display.="<BR>";
-		$display.="Lieu : <input type=\"text\" name=\"lieu\" /><BR>";
+		$display.="Lieu :</br>";
+		// ADRESSE
+				$display.="  Nom de rue : <input type=\"text\" name=\"rue\" /></br>";
+				$display.="  Code postal : <input type=\"text\" name=\"cp\" /></br>";
+				$display.="  Ville: <input type=\"text\" name=\"ville\" /></br>"; 
+									
+		$display.='Commentaire : </br>';
+		$display.='<textarea name="mon_champ" wrap="physical" align="center">Commentez ici</textarea><BR>';
 		$display.="<input type=\"submit\" value=\"Valider\" name=\"submit\" />";
-		$display.="</p>";
+		$display.="</p> </br></br></br>";
+		$display.="<a href=index.php?page=./rdv/list> Retour </a>";
 }
 ?>
 
@@ -69,6 +79,5 @@ else // Si le formulaire n'a pas deja ete rempli
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<li><a href="index.php?page=./user/creation">Creation utilisateur</a></li>
 	</ul>
 </div>

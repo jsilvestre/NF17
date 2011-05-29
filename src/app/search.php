@@ -33,8 +33,8 @@
 		$display.="<a href=index.php?page=./contact/list> Retour </a>";
 		
 		// Affichage des actions possibles
-			$display2.= "<li><a href=index.php?page=./contact/modif&id=".$id.">Modifier ce contact</a></li>";
-			$display2.= "<li><a href=index.php?page=./contact/suprim&id=".$id.">Supprimer ce contact</a></li>";
+		$display2.= "<li><a href=index.php?page=./contact/modif&id=".$id.">Modifier ce contact</a></li>";
+		$display2.= "<li><a href=index.php?page=./contact/suprim&id=".$id.">Supprimer ce contact</a></li>";
 		}
 	?>
 

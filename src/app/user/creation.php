@@ -8,10 +8,6 @@ else
 
 if(!empty($_POST['submit']))
 {
-
-$pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
-$bdd = new PDO('mysql:host=localhost;dbname=nf17', 'root', '', $pdo_options);
-	
 // Recuperation des variables
 $login=$_POST['login'];
 $nom=$_POST['nom'];
@@ -28,7 +24,7 @@ $mdp=$_POST['mdp'];
 // Creation de la date
 $date=$an.'-'.$mois.'-'.$jour;
 // Creation de la requete
-$req=$bdd->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
+$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
 // Execution de la requete
 $req->execute(array($login,$numSS,$nom,$prenom,$date,$mdp));
 $req->closeCursor();
