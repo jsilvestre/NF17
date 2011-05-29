@@ -1,7 +1,7 @@
 <?php
 		$display="";
 		$display2="";
-		// En cas de premiere page, on affiche la liste des utilisateurs dans la base de données
+		// En cas de premiere page, on affiche la liste des utilisateurs dans la base de donn�es
 		if(empty($_GET['id']))
 		{
 			$req=$db->prepare('SELECT identifiant from contact');
@@ -15,7 +15,7 @@
 			$req->closeCursor();
 			
 		// Affichage des actions possibles
-			$display2.= "<li><a href=\"index.php?page=./contact/creation\">Création d'un contact</a></li>";
+			$display2.= "<li><a href=\"index.php?page=./contact/creation\">Creation d'un contact</a></li>";
 		}
 		else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 		{
@@ -33,8 +33,8 @@
 		$display.="<a href=index.php?page=./contact/list> Retour </a>";
 		
 		// Affichage des actions possibles
-			$display2.= "<li><a href=index.php?page=./contact/modif&id=".$id.">Modifier ce contact</a></li>";
-			$display2.= "<li><a href=index.php?page=./contact/suprim&id=".$id.">Supprimer ce contact</a></li>";
+		$display2.= "<li><a href=index.php?page=./contact/modif&id=".$id.">Modifier ce contact</a></li>";
+		$display2.= "<li><a href=index.php?page=./contact/suprim&id=".$id.">Supprimer ce contact</a></li>";
 		}
 	?>
 

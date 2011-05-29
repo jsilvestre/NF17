@@ -38,7 +38,6 @@ CREATE TABLE organisation (
 
 CREATE TABLE adresse (
 	id_adresse serial,
-	numero integer,
 	nom_rue varchar(35),
 	cp integer(5),
 	ville varchar(35),

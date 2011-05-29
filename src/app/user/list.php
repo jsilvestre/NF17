@@ -2,6 +2,7 @@
 
 	// initialise la variable d'affichage
 	$display = '';
+	$display2="";
 
 	// En cas de premiere page, on affiche la liste des utilisateurs dans la base de données
 	if(empty($_GET['id']))
@@ -15,6 +16,8 @@
 			$display.= "<br />";
 		}
 		$req->closeCursor();
+		$display2.='<li><a href="index.php?page=user/creation">Création utilisateur</a></li>';
+		
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
@@ -40,6 +43,6 @@
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<li><a href="index.php?page=user/modify">Modifier l'utilisateur</a></li>
+	<?php echo $display2; ?>
 	</ul>
 </div>

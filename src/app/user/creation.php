@@ -8,27 +8,26 @@ else
 
 if(!empty($_POST['submit']))
 {
-	
-	// Récuperation des variables
-	$login=$_POST['login'];
-	$nom=$_POST['nom'];
-	$prenom=$_POST['prenom'];
-	$jour=$_POST['jour'];
-	$mois=$_POST['mois'];
-	$an=$_POST['an'];
-	$numSS=$_POST['numSS'];
-	if($numSS<1)
-		echo "il y a une erreur de saisie dans le jour";
-	$mdp=$_POST['mdp'];
+// Récuperation des variables
+$login=$_POST['login'];
+$nom=$_POST['nom'];
+$prenom=$_POST['prenom'];
+$jour=$_POST['jour'];
+$mois=$_POST['mois'];
+$an=$_POST['an'];
+$numSS=$_POST['numSS'];
+if($numSS<1)
+	echo "il y a une erreur de saisie dans le jour";
+$mdp=$_POST['mdp'];
 
 
-	// Creation de la date
-	$date=$an.'-'.$mois.'-'.$jour;
-	// Creation de la requete
-	$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
-	// Execution de la requete
-	$req->execute(array($login,$numSS,$nom,$prenom,$date,$mdp));
-	$req->closeCursor();
+// Creation de la date
+$date=$an.'-'.$mois.'-'.$jour;
+// Creation de la requete
+$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
+// Execution de la requete
+$req->execute(array($login,$numSS,$nom,$prenom,$date,$mdp));
+$req->closeCursor();
 
 }
 ?>
