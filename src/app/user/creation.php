@@ -1,47 +1,44 @@
 <?php
-function verifierDate($month, $day, $year) {
-if (checkdate($month, $day, $year) == true)
-{ return 1; }
-else
-{ return -1; }
-}
-
-if(!empty($_POST['submit']))
+if(!empty($_POST['submit'])) // si le formulaire a été validé
 {
-// Récuperation des variables
-$login=$_POST['login'];
-$nom=$_POST['nom'];
-$prenom=$_POST['prenom'];
-$jour=$_POST['jour'];
-$mois=$_POST['mois'];
-$an=$_POST['an'];
-$numSS=$_POST['numSS'];
-if($numSS<1)
-	echo "il y a une erreur de saisie dans le jour";
-$mdp=$_POST['mdp'];
+	// Récuperation des variables
+	$login=$_POST['login'];
+	$nom=$_POST['nom'];
+	$prenom=$_POST['prenom'];
+	$jour=$_POST['jour'];
+	$mois=$_POST['mois'];
+	$an=$_POST['an'];
+	$numSS=$_POST['numSS'];
+	$mdp=$_POST['mdp'];
+	$is_special=$_POST['is_special'];
+	
+	$is_special = ($is_special == "on") ? 1 : 0;
+	
+	if(checkdate($mois, $jour, $an) !== true)
+		$erreur = "Il y a une erreur de saisie dans la date.";
 
-
-// Creation de la date
-$date=$an.'-'.$mois.'-'.$jour;
-// Creation de la requete
-$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?)');
-// Execution de la requete
-$req->execute(array($login,$numSS,$nom,$prenom,$date,$mdp));
-$req->closeCursor();
-
+	// Création de la date
+	$date=$an.'-'.$mois.'-'.$jour;
+	// Création de la requete
+	$req=$db->prepare('INSERT INTO utilisateur VALUES(?,?,?,?,?,?,?)');
+	// Exécution de la requete
+	$req->execute(array($numSS,$login,$nom,$prenom,$date,$mdp,$is_special));
+	$req->closeCursor();
+	
+	header('Location: index.php?page=general/message&type=confirm&msg=L\'utilisateur a bien été créé.&return=user/creation');
 }
 ?>
-
 <div id="wrapper">
 	<div class="box">
 		<h2>Fenêtre principale</h2>
 		<form method="post" action="index.php?page=user/creation">
 				<p>Nom d'utilisateur : <input type="text" name="login" /><br />
-				Nom: <input type="text" name="nom" /> <br />
-				Prénom : <input type="text" name="prenom" /> <br />
-				Date de naissance (JJ MM AAAA): <input type="text" name="jour" /> - <input type="text" name="mois" /> - <input type="text" name="an" /> <br />
-				Numéro de sécurité sociale : <input type="text" name="numSS" /> <br />
-				Mot de passe : <input type="text" name="mdp" /> <br />
+				Nom: <input type="text" name="nom" /><br />
+				Prénom : <input type="text" name="prenom" /><br />
+				Date de naissance (JJ MM AAAA): <input type="text" name="jour" /> - <input type="text" name="mois" /> - <input type="text" name="an" /><br />
+				Numéro de sécurité sociale : <input type="text" name="numSS" /><br />
+				Mot de passe : <input type="password" name="mdp" /><br />
+				Administrateur : <input type="checkbox" name="is_special" /><br />
 				<input type="submit" value="Valider" name="submit" />
 				</p>
 		</form>
