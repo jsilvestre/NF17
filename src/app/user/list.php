@@ -1,35 +1,40 @@
 <?php
+function readAdmin($value) { return ($value) ? "Oui" : "Non"; }
 
-	// initialise la variable d'affichage
+	// initialise les variables d'affichage
 	$display = '';
-	$display2="";
+	$displayAction = '';
 
-	// En cas de premiere page, on affiche la liste des utilisateurs dans la base de données
+	// Si aucun ID n'est passé, on affiche la liste des utilisateurs dans la base de données
 	if(empty($_GET['id']))
 	{
-		$req=$db->prepare('SELECT login from utilisateur');
+		$req=$db->prepare("SELECT numSS,login,nom,prenom from utilisateur");
 		// Execution de la requete
 		$req->execute();
 		while($result = $req->fetch(PDO::FETCH_ASSOC))
 		{
-			$display.= '<a href="index.php?page=user/list&id='.$result['login'].'">'.$result['login'].'</a>';
-			$display.= "<br />";
+			$display.= '<a href="index.php?page=user/list&id='.$result['numSS'].'">'.$result['prenom'].' '.$result['nom'].' ('.$result['login'].')</a>';
+			$display.= '<br />';
 		}
-		$req->closeCursor();
-		$display2.='<li><a href="index.php?page=user/creation">Création utilisateur</a></li>';
 		
+		$req->closeCursor();
+		$displayAction.='<li><a href="index.php?page=user/creation">Création d\'un utilisateur</a></li>';		
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
-		$req=$db->prepare("select * from utilisateur where login=?");
+		$req=$db->prepare("select * from utilisateur where numSS=?");
 		$req->execute(array($_GET['id']));
 		$result = $req->fetch(PDO::FETCH_ASSOC);
-		$display.= "Nom d utilisateur : ".$result['login']."<br />" ;
-		$display.= "Nom  : ".$result['nom']."<br />" ;
-		$display.= "Prénom : ".$result['prenom']."<br />" ;
-		$display.= "Date de naissance : ".$result['dateNaissance']."<br />" ;
-		$display.= "Numero de securite sociale : ".$result['numSS']."<br /> <br /><br /><br />" ;
-		$display.= '<a href="index.php?page=user/list"> Retour </a>';
+		$display.= "Nom d'utilisateur : ".$result['login']."<br />";
+		$display.= "Nom  : ".$result['nom']."<br />";
+		$display.= "Prénom : ".$result['prenom']."<br />";
+		$display.= "Date de naissance : ".$result['dateNaissance']."<br />";
+		$display.= "Numero de securite sociale : ".$result['numSS']."<br />";
+		$display.= "Administrateur ? ".readAdmin($result['is_special'])."<br /><br />";
+		$display.= '<a href="index.php?page=user/list">Retour </a>';
+
+		$displayAction.='<li><a href="index.php?page=user/modify&id='.$result['numSS'].'">Modifier l\'utilisateur (non impl.)</a></li>';				
+		$displayAction.='<li><a href="index.php?page=user/delete&id='.$result['numSS'].'">Supprimer l\'utilisateur (non impl.)</a></li>';		
 	}
 ?>
 
@@ -43,6 +48,6 @@
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-	<?php echo $display2; ?>
+	<?php echo $displayAction; ?>
 	</ul>
 </div>
