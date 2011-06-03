@@ -39,7 +39,8 @@ ob_end_clean();
 <html>
 <head>
 	<title>Customer Relationship Management</title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta charset="UTF-8" />
+	<meta http-equiv="content-type" content="text/html" />
 	<link rel="stylesheet" href="resources/styles/crm.css" type="text/css" media="screen" />
 </head>
 	
