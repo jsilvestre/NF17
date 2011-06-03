@@ -3,33 +3,36 @@
 */
 USE `NF17`;
 
-/*DROP TABLE adresse;
-DROP TABLE posteContact;
-DROP TABLE administration;
-DROP TABLE rendezVous;
-DROP TABLE organisation;
-DROP TABLE contact;
-DROP TABLE utilisateur;*/
+FLUSH TABLES /* évite certains bugs à la création du schéma */
+
+DROP TABLE IF EXISTS rendezVous;
+DROP TABLE IF EXISTS adresse;
+DROP TABLE IF EXISTS organisation;
+DROP TABLE IF EXISTS contact;
+DROP TABLE IF EXISTS utilisateur;
 
 CREATE TABLE utilisateur (
-	login varchar(25),
-	numSS integer(15) UNIQUE NOT NULL,
+	numSS integer(15),
+	login varchar(25) UNIQUE NOT NULL,
 	nom varchar(25),
 	prenom varchar(25),
 	dateNaissance date,
 	mdp varchar(255),
+	is_special boolean, /* true si l'utilisateur est spécial, false sinon */
 	
-	primary key(login)	
+	primary key(numSS)	
 );
 
 CREATE TABLE contact (
-	identifiant varchar(25),
-	numSS integer(15) UNIQUE NOT NULL,
+	numSS integer(15),
 	nom varchar(25),
 	prenom varchar(25),
 	dateNaissance date,
+	organisation varchar(50),
+	poste varchar(35),
 	
-	primary key(identifiant)
+	primary key(numSS),
+	foreign key(organisation) references organisation(nom)
 );
 
 CREATE TABLE organisation (
@@ -37,41 +40,26 @@ CREATE TABLE organisation (
 );
 
 CREATE TABLE adresse (
-	id_adresse serial,
+	pkArtif serial,
+	numero integer(2),
 	nom_rue varchar(35),
 	cp integer(5),
 	ville varchar(35),
 	organisation varchar(50),
 	
-	primary key(id_adresse),
+	primary key(pkArtif),
 	foreign key(organisation) references organisation(nom)	
 );
 
 CREATE TABLE rendezVous (
 	date_heure datetime,
-	utilisateur varchar(25),
-	contact varchar(25),
+	utilisateur integer(15),
+	contact integer(15),
 	annulation boolean,
 	lieu integer,
 	
-	primary key(date_heure, utilisateur, contact),
-	foreign key(utilisateur) references utilisateur(login),
-	foreign key(contact) references contact(identifiant),
-	foreign key(lieu) references adresse(id_adresse)
-);
-
-CREATE TABLE administration (
-	utilisateurspe varchar(255) primary key,
-
-	foreign key(utilisateurspe) references utilisateur(login)
-);
-
-CREATE TABLE posteContact (
-	salarie varchar(25),
-	entreprise varchar(50),
-	poste varchar(35),
-	
-	primary key(salarie,entreprise),
-	foreign key(salarie) references contact(identifiant),
-	foreign key(entreprise) references organisation(nom)
+	primary key(date_heure, utilisateur, contact, lieu), /* changement par rapport à eux : pour prendre en compte la correction du prof (contradictoire à deux endroits donc j'ai fait un choix)*/
+	foreign key(utilisateur) references utilisateur(numSS),
+	foreign key(contact) references contact(numSS),
+	foreign key(lieu) references adresse(pkArtif)
 );

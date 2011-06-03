@@ -3,49 +3,33 @@
 	(en prenant soin de supprimer les anciennes pour remettre à neuf la base)
 */
 USE `nf17`;
-DELETE  FROM posteContact;
-DELETE  FROM administration;
-DELETE  FROM rendezVous;
-DELETE  FROM adresse;
-DELETE  FROM organisation;
-DELETE  FROM contact;
-DELETE  FROM utilisateur;
+DELETE FROM rendezVous;
+DELETE FROM adresse;
+DELETE FROM organisation;
+DELETE FROM contact;
+DELETE FROM utilisateur;
 
 /* insertion d'utilisateurs de tests */
-INSERT INTO utilisateur(login,numSS,nom,prenom,dateNaissance,mdp) values('maximel',19002385,'Lefebvre','Maxime','1990-02-09','roucarnage');
-INSERT INTO utilisateur(login,numSS,nom,prenom,dateNaissance,mdp) values('francoisg',1900238,'Guillepain','François','1988-08-15','pakhorabane');
-INSERT INTO utilisateur(login,numSS,nom,prenom,dateNaissance,mdp) values('nathand',29002385,'Ducrey','Nathan','1990-06-20','getsubyakuya666ofdeathkillinginnocentmonkeys');
+INSERT INTO utilisateur(numSS,login,nom,prenom,dateNaissance,mdp,is_special) values(19002385,'maximel','Lefebvre','Maxime','1990-02-09','roucarnage',false);
+INSERT INTO utilisateur(numSS,login,nom,prenom,dateNaissance,mdp,is_special) values(19002384,'francoisg','Guillepain','François','1988-08-15','pakhorabane',true);
+INSERT INTO utilisateur(numSS,login,nom,prenom,dateNaissance,mdp,is_special) values(29002383,'nathand','Ducrey','Nathan','1990-06-20','getsubyakuya666ofdeathkillinginnocentmonkeys',false);
 
 /* insertion des contacts */
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('billt',1900238,'Tremendous','Bill','1978-04-25');
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('hubertb',19002,'Bertier','Hubert','1982-12-01');
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('ichigok',190023,'Kurosaki','Ichigo','1982-12-01');
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('narutou',19002385,'Uzumaki','Naruto','1982-12-01');
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('tryndalol',1900237,'LoL','Tryndamère','1982-12-01');
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('garenlol',1900234,'LoL','Garen','1982-12-01');
-INSERT INTO contact(identifiant,numSS,nom,prenom,dateNaissance) values('stephanec',190,'Crozat','Stéphane','1922-12-01');
-
+INSERT INTO contact(numSS,nom,prenom,dateNaissance,organisation,poste) values(1900238,'Tremendous','Bill','1978-04-25','Service Secret Americain','Agent double');
+INSERT INTO contact(numSS,nom,prenom,dateNaissance,organisation,poste) values(1900236,'Bertier','Hubert','1982-12-01','Club Dorothée','Président du fan club');
+INSERT INTO contact(numSS,nom,prenom,dateNaissance,organisation,poste) values(1900235,'Crozat','Stéphane','1922-12-01','Université Technologique de Compiègne','Dieu');
+                                                           
 /* organisation */
 INSERT INTO organisation(nom) values('Université Technologique de Compiègne');
 INSERT INTO organisation(nom) values('Club Dorothée');
-INSERT INTO organisation(nom) values('Entreprise des héros OP de LoL');
+INSERT INTO organisation(nom) values('Service Secret Americain');
 
 /* insertion des adresses */
-INSERT INTO adresse(numero,nom_rue,cp,ville,organisation) values(1,'roger coutolenc',60200,'Compiègne','Université Technologique de Compiègne');
-INSERT INTO adresse(numero,nom_rue,cp,ville,organisation) values(2,'dessin animés',95000,'Paris','Club Dorothée');
-INSERT INTO adresse(numero,nom_rue,cp,ville,organisation) values(3,'riot games',48100,'WTF','Entreprise des héros OP de LoL');
+INSERT INTO adresse(pkArtif,numero,nom_rue,cp,ville,organisation) values(1,18,'roger coutolenc',60200,'Compiègne','Université Technologique de Compiègne');
+INSERT INTO adresse(pkArtif,numero,nom_rue,cp,ville,organisation) values(2,2,'dessin animés',95000,'Paris','Club Dorothée');
+INSERT INTO adresse(pkArtif,numero,nom_rue,cp,ville,organisation) values(3,2,'Roger Harrison',48100,'Washington','Service Secret Americain');
 
 /* insertion des rendez-vous */
-INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2011-05-30 12:30:00','francoisg','tryndalol',false,3);
-INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2012-08-04 10:00:00','nathand','ichigok',false,2);
-INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('201-04-02 22:00:00','maximel','stephanec',false,1);
-
-/* insertion des administrateurs */
-INSERT INTO administration(utilisateurspe) VALUES('hubertb');
-INSERT INTO administration(utilisateurspe) VALUES('billt');
-
-/* insertion des postes des contacts */
-INSERT INTO posteContact(salarie,entreprise,poste) VALUES('tryndalol','Entreprise des héros OP de LoL','Président');
-INSERT INTO posteContact(salarie,entreprise,poste) VALUES('garenlol','Entreprise des héros OP de LoL','Premier secrétaire');
-INSERT INTO posteContact(salarie,entreprise,poste) VALUES('narutou','Club Dorothée','Animateur blond');
-INSERT INTO posteContact(salarie,entreprise,poste) VALUES('stephanec','Université Technologique de Compiègne','Dieu');
+INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2011-05-30 12:30:00',19002384,1900236,false,3);
+INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2012-08-04 10:00:00',29002383,1900238,false,2);
+INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('201-04-02 22:00:00',19002385,1900235,false,1);
