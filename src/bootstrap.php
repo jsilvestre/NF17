@@ -1,8 +1,9 @@
-	<?php
+<?php
 
 define('EXT','.php');
 define('APP_PATH','./app');
 
+// chargement des fichiers de configuration
 include 'resources/config/base.php';
 include 'resources/config/database.php';
 

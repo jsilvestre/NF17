@@ -35,6 +35,7 @@ ob_end_clean();
 // fin du routing de l'application, affichage dans le wrapper.
 
 ?>
+<!DOCTYPE html>
 <html>
 <head>
 	<title>Customer Relationship Management</title>
