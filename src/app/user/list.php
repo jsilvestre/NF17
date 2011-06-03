@@ -34,7 +34,7 @@ function readAdmin($value) { return ($value) ? "Oui" : "Non"; }
 		$display.= '<a href="index.php?page=user/list">Retour </a>';
 
 		$displayAction.='<li><a href="index.php?page=user/modify&id='.$result['numSS'].'">Modifier l\'utilisateur (non impl.)</a></li>';				
-		$displayAction.='<li><a href="index.php?page=user/delete&id='.$result['numSS'].'">Supprimer l\'utilisateur (non impl.)</a></li>';		
+		$displayAction.='<li><a href="index.php?page=user/delete&id='.$result['numSS'].'">Supprimer l\'utilisateur (/!\ non réversible)</a></li>';		
 	}
 ?>
 
