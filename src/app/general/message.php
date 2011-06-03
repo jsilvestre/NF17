@@ -12,12 +12,13 @@ else
 
 $msg = (empty($_GET['msg'])) ? 'Une erreur est survenue lors de l\'affichage de la page, veuillez en référer au responsable du site web.' : $_GET['msg'];
 $retour = (empty($_GET['retour'])) ? 'page=main' : 'page='.$_GET['retour'];
+$opt = (!empty($_GET['opt'])) ? '&'.$_GET['opt'] : '';
 ?>
 <div id="wrapper">
 	<div class="box">
 		<h2><?php echo $title; ?></h2>
 		<p class="<?php echo $class; ?>"><?php echo $msg; ?></p>
-		<p><a href="index.php?<?php echo $retour; ?>">Retour</a></p>
+		<p><a href="index.php?<?php echo $retour.$opt; ?>">Retour</a></p>
 	</div>
 </div>
 
