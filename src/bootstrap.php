@@ -7,6 +7,9 @@ define('APP_PATH','./app');
 include 'resources/config/base.php';
 include 'resources/config/database.php';
 
+// chargement des librairies
+include 'lib/core.php';
+
 
 // connexion à la base de données
 $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;

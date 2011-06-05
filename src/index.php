@@ -23,12 +23,29 @@ if(file_exists(APP_PATH.'/'.$page.EXT))
 }
 else
 {
+	header('HTTP/1.0 404 Not Found');
 	$path = APP_PATH.'/'.$config['error']['404'].EXT;
 }
 
 // buffering du résultat
 ob_start();
+
+try {
 	require $path;
+}
+catch(PDOException $e)
+{
+	header('HTTP/1.0 500 Internal Server Error');
+	
+	if($config['debug_mode'] === true)
+	{
+		echo display_exception($e);
+	}
+	else
+	{
+		require APP_PATH.'/'.$config['error']['500'].EXT;
+	}
+}
     $display = ob_get_contents();
 ob_end_clean();
 
