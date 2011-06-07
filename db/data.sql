@@ -30,6 +30,7 @@ INSERT INTO adresse(pkArtif,numero,nom_rue,cp,ville,organisation) values(2,2,'de
 INSERT INTO adresse(pkArtif,numero,nom_rue,cp,ville,organisation) values(3,2,'Roger Harrison',48100,'Washington','Service Secret Americain');
 
 /* insertion des rendez-vous */
-INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2011-05-30 12:30:00',19002384,1900236,false,3);
+INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2012-05-30 12:30:00',19002384,1900236,false,3);
 INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2012-08-04 10:00:00',29002383,1900238,false,2);
-INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('201-04-02 22:00:00',19002385,1900235,false,1);
+INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2012-04-02 22:00:00',19002385,1900235,false,1);
+INSERT INTO rendezVous(date_heure,utilisateur,contact,annulation,lieu) values('2013-04-02 22:00:00',19002385,1900235,false,1);

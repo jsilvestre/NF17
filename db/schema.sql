@@ -20,7 +20,7 @@ CREATE TABLE utilisateur (
 	mdp varchar(255),
 	is_special boolean, /* true si l'utilisateur est spécial, false sinon */
 	
-	primary key(numSS)	
+	primary key(numSS)
 );
 
 CREATE TABLE contact (
@@ -42,12 +42,13 @@ CREATE TABLE organisation (
 CREATE TABLE adresse (
 	pkArtif serial,
 	numero integer(2),
-	nom_rue varchar(35),
-	cp integer(5),
-	ville varchar(35),
+	nom_rue varchar(35) NOT NULL,
+	cp integer(5) NOT NULL,
+	ville varchar(35) NOT NULL,
 	organisation varchar(50),
 	
 	primary key(pkArtif),
+	unique(numero,nom_rue,cp,ville,organisation),
 	foreign key(organisation) references organisation(nom)	
 );
 
@@ -61,14 +62,10 @@ CREATE TABLE rendezVous (
 	primary key(date_heure, utilisateur, contact, lieu), /* changement par rapport à eux : pour prendre en compte la correction du prof (contradictoire à deux endroits donc j'ai fait un choix)*/
 	foreign key(utilisateur) references utilisateur(numSS),
 	foreign key(contact) references contact(numSS),
-	foreign key(lieu) references adresse(pkArtif),
-	
-	check(date_heure >= CURRENT_TIMESTAMP)
+	foreign key(lieu) references adresse(pkArtif)
 );
 
 /*
 - faire une vue utilisateur
 - faire une vue administrateur
-- faire une vue 
-
 */
