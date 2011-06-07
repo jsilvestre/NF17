@@ -54,13 +54,15 @@ CREATE TABLE adresse (
 );
 
 CREATE TABLE rendezVous (
-	date_heure datetime,
-	utilisateur integer(15),
-	contact integer(15),
+	pkArtif serial,
+	date_heure datetime NOT NULL,
+	utilisateur integer(15) NOT NULL,
+	contact integer(15) NOT NULL,
 	annulation boolean,
-	lieu integer,
+	lieu integer NOT NULL,
 	
-	primary key(date_heure, utilisateur, contact, lieu), /* changement par rapport à eux : pour prendre en compte la correction du prof (contradictoire à deux endroits donc j'ai fait un choix)*/
+	primary key(pkArtif),
+	unique(date_heure, utilisateur, contact, lieu), /* changement par rapport à eux : pour prendre en compte la correction du prof (contradictoire à deux endroits donc j'ai fait un choix)*/
 	foreign key(utilisateur) references utilisateur(numSS),
 	foreign key(contact) references contact(numSS),
 	foreign key(lieu) references adresse(pkArtif)
