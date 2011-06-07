@@ -11,6 +11,8 @@ if(!empty($_GET['id']))
 	}
 	else
 	{
+		$req=$db->prepare("DELETE FROM rendezVous WHERE contact=?");
+		$req->execute(array($_GET['id']));
 		$req=$db->prepare("DELETE FROM contact WHERE numSS=?");
 		$req->execute(array($_GET['id']));
 		header("Location: index.php?page=general/message&type=confirm&msg=Le contact a bien été supprimé.&retour=contact/list");
