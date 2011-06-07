@@ -61,5 +61,14 @@ CREATE TABLE rendezVous (
 	primary key(date_heure, utilisateur, contact, lieu), /* changement par rapport à eux : pour prendre en compte la correction du prof (contradictoire à deux endroits donc j'ai fait un choix)*/
 	foreign key(utilisateur) references utilisateur(numSS),
 	foreign key(contact) references contact(numSS),
-	foreign key(lieu) references adresse(pkArtif)
+	foreign key(lieu) references adresse(pkArtif),
+	
+	check(date_heure >= CURRENT_TIMESTAMP)
 );
+
+/*
+- faire une vue utilisateur
+- faire une vue administrateur
+- faire une vue 
+
+*/

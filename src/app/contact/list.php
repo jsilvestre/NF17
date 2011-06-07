@@ -33,7 +33,7 @@
 		$displayAction.='<li><a href="index.php?page=contact/modify&id='.$result['numSS'].'">Modifier le contact</a></li>';				
 		$displayAction.='<li><a href="index.php?page=contact/delete&id='.$result['numSS'].'">Supprimer le contact (/!\ non réversible)</a></li>';		
 	}
-	?>
+?>
 
 <div id="wrapper">
 	<div class="box">
