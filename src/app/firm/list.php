@@ -39,7 +39,7 @@
 					<tr>
 						<th>Code postal</th>
 						<th>Ville</th>
-						<th>Rue</th>
+						<th>Adresse</th>
 					</tr>';
 			$req2=$db->prepare('select * from adresse WHERE organisation=?');
 			$req2->execute(array($result['nom']));
@@ -48,7 +48,7 @@
 				$display.='<tr>';
 				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'. $result2['cp'].'</a></td>';
 				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'.$result2['ville'].'</a></td>';
-				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'.$result2['nom_rue'].'</td>';
+				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'.$result2['numero'].','.$result2['nom_rue'].'</td>';
 				$display.='</tr>';
 			}
 		$display.='</table>';
