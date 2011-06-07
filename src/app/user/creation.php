@@ -16,7 +16,7 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 	
 		$is_special = (!empty($_POST['is_special']) && $_POST['is_special'] == "on") ? 1 : 0;
 
-		if(is_integer((int)$mois) && is_integer((int)$jour) && is_integer((int)$an) && checkdate($mois, $jour, $an) == true)
+		if(checkdate((int)$mois,(int)$jour,(int)$an) == true)
 		{
 			// Création de la date
 			$date=$an.'-'.$mois.'-'.$jour;

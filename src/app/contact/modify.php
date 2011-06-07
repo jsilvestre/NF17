@@ -17,7 +17,7 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 		$poste=$_POST['poste'];
 		$firm=$_POST['firm']; 	
 
-		if(is_integer((int)$mois) && is_integer((int)$jour) && is_integer((int)$an) && checkdate($mois, $jour, $an) == true)
+		if(checkdate($mois, $jour, $an) == true)
 		{
 			// Création de la date
 			$date=$an.'-'.$mois.'-'.$jour;
@@ -39,12 +39,12 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 				$req->execute(array($firm));
 					if($req->rowCount() == 0)
 					{
-					$req2=$db->prepare("INSERT INTO organisation VALUES(?)");
-					$req2->execute(array($firm));
-					$req2->CloseCursor();
+						$req2=$db->prepare("INSERT INTO organisation VALUES(?)");
+						$req2->execute(array($firm));
+						$req2->CloseCursor();
 					}
 				$req->closeCursor();
-				header('Location: index.php?page=general/message&type=confirm&msg=Le contact '.$nom.' a bien été modifié.&retour=contact/modify&opt=id='.$numSS.'');
+				header('Location: index.php?page=general/message&type=confirm&msg=Le contact '.$nom.' a bien été modifié.&retour=contact/list&opt=id='.$numSS.'');
 				$success = true;
 			}
 			else

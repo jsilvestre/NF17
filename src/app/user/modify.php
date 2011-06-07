@@ -19,7 +19,7 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 	
 		$is_special = (!empty($_POST['is_special']) && $_POST['is_special'] == "on") ? 1 : 0;
 
-		if(is_integer((int)$mois) && is_integer((int)$jour) && is_integer((int)$an) && checkdate($mois, $jour, $an) == true)
+		if(checkdate((int)$mois, (int)$jour, (int)$an) == true)
 		{
 			// Création de la date
 			$date=$an.'-'.$mois.'-'.$jour;
@@ -35,7 +35,7 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 				$req->execute(array($login,$nom,$prenom,$date,$mdp,$is_special,$numSS));
 				$req->closeCursor();
 				
-				header('Location: index.php?page=general/message&type=confirm&msg=L\'utilisateur '.$login.' a bien été modifié.&retour=user/modify&opt=id='.$numSS.'');
+				header('Location: index.php?page=general/message&type=confirm&msg=L\'utilisateur '.$login.' a bien été modifié.&retour=user/list&opt=id='.$numSS.'');
 				$success = true;
 			}
 			else
@@ -69,7 +69,7 @@ if(!empty($_GET['id']) || !empty($_POST['numSS']))
 	else
 	{
 		$req=$db->prepare("SELECT * FROM utilisateur WHERE numSS=?");
-		$req->execute(array($_GET['id']));
+		$req->execute(array($id));
 		$result = $req->fetch(PDO::FETCH_ASSOC);
 		
 		$is_special = ($result['is_special'] == 1) ? 'checked="checked"' : '';
