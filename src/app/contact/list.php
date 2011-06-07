@@ -15,7 +15,11 @@
 		}
 		
 		$req->closeCursor();
-		$displayAction.='<li><a href="index.php?page=contact/creation">Création d\'un contact</a></li>';		
+		
+		if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+		{		
+			$displayAction.='<li><a href="index.php?page=contact/creation">Création d\'un contact</a></li>';
+		}
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
@@ -30,8 +34,11 @@
 		$display.= "Numero de securite sociale : ".$result['poste']."<br /><br />";
 		$display.= '<a href="index.php?page=user/list">Retour </a>';
 
-		$displayAction.='<li><a href="index.php?page=contact/modify&id='.$result['numSS'].'">Modifier le contact</a></li>';				
-		$displayAction.='<li><a href="index.php?page=contact/delete&id='.$result['numSS'].'">Supprimer le contact (/!\ non réversible)</a></li>';		
+		if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+		{
+			$displayAction.='<li><a href="index.php?page=contact/modify&id='.$result['numSS'].'">Modifier le contact</a></li>';				
+			$displayAction.='<li><a href="index.php?page=contact/delete&id='.$result['numSS'].'">Supprimer le contact (/!\ non réversible)</a></li>';		
+		}
 	}
 ?>
 
@@ -45,6 +52,6 @@
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<?php echo $displayAction; ?>
+		<?php echo (empty($displayAction)) ? "Aucune action possible" : $displayAction; ?>
 	</ul>
 </div>

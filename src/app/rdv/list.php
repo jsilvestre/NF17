@@ -29,8 +29,12 @@ if(!empty($_GET['id'])) // on affiche les informations du rendez-vous en questio
 	$display.="<br /><a href=index.php?page=rdv/list>Retour</a>";
 	
 	// Affichage des actions possibles
-	$displayAction.= "<li><a href=index.php?page=rdv/modify&id=".$id.">Modifier le rendez-vous</a></li>";
-	$displayAction.= "<li><a href=index.php?page=rdv/delete&id=".$id.">Supprimer le rendez-vous (/!\ irréversible)</a></li>";
+	if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+	{
+		$displayAction.= "<li><a href=index.php?page=rdv/cancel&id=".$id.">Annuler le rendez-vous</a></li>";
+		$displayAction.= "<li><a href=index.php?page=rdv/modify&id=".$id.">Modifier le rendez-vous</a></li>";
+		$displayAction.= "<li><a href=index.php?page=rdv/delete&id=".$id.">Supprimer le rendez-vous (/!\ irréversible)</a></li>";
+	}
 }
 else // on affiche la liste des rendez-vous
 {
@@ -59,8 +63,10 @@ else // on affiche la liste des rendez-vous
 	
 	$req->closeCursor();
 
-
-	$displayAction.= '<li><a href="index.php?page=rdv/creation">Création d\'un Rendez-vous</a></li>';
+	if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+	{
+		$displayAction.= '<li><a href="index.php?page=rdv/creation">Création d\'un Rendez-vous</a></li>';
+	}
 }
 ?>
 
@@ -74,6 +80,6 @@ else // on affiche la liste des rendez-vous
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<?php echo $displayAction; ?>
+	<?php echo (empty($displayAction)) ? "Aucune action possible" : $displayAction; ?>
 	</ul>
 </div>

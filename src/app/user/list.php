@@ -18,7 +18,11 @@ function readAdmin($value) { return ($value) ? "Oui" : "Non"; }
 		}
 		
 		$req->closeCursor();
-		$displayAction.='<li><a href="index.php?page=user/creation">Création d\'un utilisateur</a></li>';		
+		
+		if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+		{
+			$displayAction.='<li><a href="index.php?page=user/creation">Création d\'un utilisateur</a></li>';		
+		}
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
@@ -33,8 +37,11 @@ function readAdmin($value) { return ($value) ? "Oui" : "Non"; }
 		$display.= "Administrateur ? ".readAdmin($result['is_special'])."<br /><br />";
 		$display.= '<a href="index.php?page=user/list">Retour </a>';
 
-		$displayAction.='<li><a href="index.php?page=user/modify&id='.$result['numSS'].'">Modifier l\'utilisateur</a></li>';				
-		$displayAction.='<li><a href="index.php?page=user/delete&id='.$result['numSS'].'">Supprimer l\'utilisateur (/!\ non réversible)</a></li>';		
+		if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+		{
+			$displayAction.='<li><a href="index.php?page=user/modify&id='.$result['numSS'].'">Modifier l\'utilisateur</a></li>';				
+			$displayAction.='<li><a href="index.php?page=user/delete&id='.$result['numSS'].'">Supprimer l\'utilisateur (/!\ non réversible)</a></li>';		
+		}
 	}
 ?>
 
@@ -48,6 +55,6 @@ function readAdmin($value) { return ($value) ? "Oui" : "Non"; }
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-	<?php echo $displayAction; ?>
+	<?php echo (empty($displayAction)) ? "Aucune action possible" : $displayAction; ?>
 	</ul>
 </div>

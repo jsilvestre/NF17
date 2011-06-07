@@ -123,7 +123,7 @@ if(empty($_POST['submit']) || !empty($erreur)) // Si le formulaire n'a pas deja 
 	}
 	else
 	{
-		// header ...
+		header("Location: index.php?page=general/message&type=error&msg=Rendez-vous introuvable.&retour=rdv/list");
 	}
 }
 ?>

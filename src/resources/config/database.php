@@ -3,7 +3,7 @@
 $config['db']['local'] = array(
 							'generic'	=> 'mysql:host=127.0.0.1;dbname=nf17',
 							'username'	=> 'root',
-							'password'	=> 'root'
+							'password'	=> ''
 						);
 						
 $config['db']['distant'] = array(

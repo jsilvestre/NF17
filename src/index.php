@@ -4,12 +4,17 @@
  * Wrapper de l'application
  */
 
+session_start();
+
 require_once 'bootstrap.php';
 
 // récupération de la page à afficher
 if(!empty($_GET['page']))
 {
 	$page = $_GET['page'];
+	
+	if(empty($_SESSION['id']))
+		header("Location: index.php");
 }
 else
 {
@@ -49,6 +54,8 @@ catch(PDOException $e)
     $display = ob_get_contents();
 ob_end_clean();
 
+session_write_close();
+
 // fin du routing de l'application, affichage dans le wrapper.
 
 ?>
@@ -65,11 +72,13 @@ ob_end_clean();
 
 	<div id="header">
 		<h1>CRM</h1>
-		<a href="index.php">Accueil</a> - 
+		<a href="index.php">Accueil</a><?php if(!empty($_SESSION['id'])) {?>- 
 		<a href="index.php?page=user/list">Gestion des utilisateurs</a> - 
 		<a href="index.php?page=contact/list">Gestion des contacts</a> - 
 		<a href="index.php?page=rdv/list">Gestion des rendez-vous</a> - 
-		<a href="index.php?page=firm/list">Gestion des organisations</a>
+		<a href="index.php?page=firm/list">Gestion des organisations</a> - 
+		<a href="index.php?page=search">Recherche</a> - 
+		<a href="index.php?page=disconnect">Déconnexion</a><?php } ?>
 	</div>
 	
 	<div id="contenu">

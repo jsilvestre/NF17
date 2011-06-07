@@ -25,16 +25,16 @@ if(!empty($_POST['submit']))
 			$req->execute(array($rue,$cp,$ville,$nom));
 			$req->closeCursor();
 
-			header('Location: index.php?page=general/message&type=confirm&msg=L\'organisation '.$nom.' a bien été créé.&retour=firm/creation');
+			header('Location: index.php?page=general/message&type=confirm&msg=L\'organisation '.$nom.' a bien Ã©tÃ© crÃ©Ã©.&retour=firm/creation');
 		}
 		else
 		{
-			$erreur = "Une organisation avec ce nom existe déjà dans la base de données.";
+			$erreur = "Une organisation avec ce nom existe dÃ©jÃ  dans la base de donnÃ©es.";
 		}
 	}
 	else 
 	{
-		$erreur = "Un des champs n'a pas été rempli ou a été mal rempli.";
+		$erreur = "Un des champs n'a pas Ã©tÃ© rempli ou a Ã©tÃ© mal rempli.";
 	}
 }
 
@@ -47,12 +47,9 @@ else
 	$erreur = "";
 }
 ?>
-
-
-
 <div id="wrapper">
 	<div class="box">
-		<h2>Fenêtre principale</h2>
+		<h2>FenÃªtre principale</h2>
 		<?php echo $erreur; ?>
 		<form method="post" action="index.php?page=firm/creation">
 		<p>
@@ -67,7 +64,8 @@ else
 
 <div id="action">
 	<h2>Actions possibles</h2>
-	<ul>
-		<li><a href="index.php?page=firm/creation">Creation organisation</a></li>
+	<ul><?php if(!empty($_SESSION['id']) && $_SESSION['isAdmin']) { ?>
+		<li><a href="index.php?page=firm/creation">CrÃ©er une organisation</a></li>
+		<?php } else echo "Aucune action possible";  ?>
 	</ul>
 </div>
