@@ -69,7 +69,8 @@ CREATE TABLE rendezVous (
 	foreign key(lieu) references adresse(pkArtif)
 );
 
-/*
-- faire une vue utilisateur
-- faire une vue administrateur
-*/
+CREATE VIEW administrateur
+(numSS,login,nom,prenom,dateNaissance,mdp)
+AS SELECT numSS,login,nom,prenom,dateNaissance,mdp
+FROM utilisateur
+WHERE is_special = 1;
