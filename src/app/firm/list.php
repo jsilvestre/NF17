@@ -17,7 +17,10 @@
 		}
 		$req->closeCursor();
 		
-		$displayAction.="<li><a href='index.php?page=firm/creation'>Creer une organisation</a></li>";
+		if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+		{
+			$displayAction.="<li><a href='index.php?page=firm/creation'>Creer une organisation</a></li>";
+		}
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
@@ -39,11 +42,15 @@
 			$display.= '<a href="index.php?page=firm/list"> Retour </a>';
 			
 		}
-		$displayAction.='<li><a href="index.php?page=firm/modify&id='.$result['nom'].'">Modifier le nom de l\'organisation</a></li>';
-		$displayAction.='<li><a href="index.php?page=firm/creationAdr&id='.$result['nom'].'">Ajouter une adresse</a></li>';
-		$displayAction.='<li><a href="index.php?page=firm/modifyAdr&id='.$result['nom'].'">Modifier une adresse</a></li>';
-		$displayAction.='<li><a href="index.php?page=firm/deleteAdr&id='.$result['nom'].'">Supprimer une adresse</a></li>';
-		$displayAction.='<li><a href="index.php?page=firm/delete&id='.$result['nom'].'">Supprimer l\'organisation</a></li>';
+		
+		if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
+		{
+			$displayAction.='<li><a href="index.php?page=firm/modify&id='.$result['nom'].'">Modifier le nom de l\'organisation</a></li>';
+			$displayAction.='<li><a href="index.php?page=firm/creationAdr&id='.$result['nom'].'">Ajouter une adresse</a></li>';
+			$displayAction.='<li><a href="index.php?page=firm/modifyAdr&id='.$result['nom'].'">Modifier une adresse</a></li>';
+			$displayAction.='<li><a href="index.php?page=firm/deleteAdr&id='.$result['nom'].'">Supprimer une adresse</a></li>';
+			$displayAction.='<li><a href="index.php?page=firm/delete&id='.$result['nom'].'">Supprimer l\'organisation</a></li>';
+		}
 	}
 ?>
 
@@ -57,6 +64,6 @@
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<?php echo $displayAction; ?>
+		<?php echo (empty($displayAction)) ? "Aucune action possible" : $displayAction; ?>
 	</ul>
 </div>
