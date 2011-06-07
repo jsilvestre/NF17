@@ -4,6 +4,7 @@ $success = false;
 
 if(!empty($_POST['submit'])) // si le formulaire a été validé
 {
+$display="";
 	// Récuperation des variables
 	if(!empty($_POST['nom']) && !empty($_POST['prenom']) && !empty($_POST['jour']) && !empty($_POST['mois']) && 
 		!empty($_POST['an']) && !empty($_POST['firm']) && !empty($_POST['numSS']) && !empty($_POST['poste']))
@@ -65,13 +66,13 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 
 if(!empty($_GET['id']) || !empty($_POST['numSS']))
 {
-	
+	$display="";
 	$id = (empty($_GET['id'])) ? $_POST['numSS'] : $_GET['id'];
 	
 	$req=$db->prepare("select numSS from contact where numSS=?");
 	$req->execute(array($id));
 
-	if($req->rowCount() == 0)
+	if($req->rowCount() == 0) // On verifie que le contact existe
 	{
 		header("Location: index.php?page=general/message&type=error&msg=Contact introuvable.&retour=contact/list");
 	}
@@ -84,6 +85,17 @@ if(!empty($_GET['id']) || !empty($_POST['numSS']))
 		$jour = date("d",$timestamp);
 		$mois = date("m",$timestamp);
 		$an = date("Y",$timestamp);
+	
+		$display="<select name=\"firm\">";
+		$display.= "<option value=".$result['organisation']." SELECTED>". $result['organisation']."</option>";
+		// On recupere la liste des entreprise
+		$req=$db->prepare("select * from organisation WHERE nom<>?");
+		$req->execute(array($result['organisation']));
+		while ($result=$req->fetch(PDO::FETCH_ASSOC))
+			$display.= "<option value=".$result['nom'].">". $result['nom']."</option>";
+
+		$display.="</select> <br />";	
+			
 	}
 }
 else
@@ -115,7 +127,7 @@ else
 												<input type="text" name="mois" value="<?php echo $mois; ?>" /> - 
 												<input type="text" name="an" value="<?php echo $an; ?>"/><br />
 				Numéro de sécurité sociale : <?php echo $result['numSS']; ?><input type="hidden" name="numSS" value="<?php echo $result['numSS']; ?>" /><br />
-				Organisation : <input type="text" name="firm" value="<?php echo $result['organisation']; ?>"/><br />
+				Organisation : <?php echo $display; ?>
 				Poste : <input type="texte" name="poste" value="<?php echo $result['poste']; ?>"/><br /><br />
 				<input type="submit" value="Valider" name="submit" />
 				</p>

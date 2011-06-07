@@ -48,6 +48,18 @@ if(!empty($_POST['submit'])) // si le formulaire a été validé
 		$erreur = "Un des champs n'a pas été rempli ou a été mal rempli.";
 	}
 }
+else // Formulaire non validé
+{
+$display="<select name=\"firm\">";
+// On recupere la liste des entreprise
+$req=$db->prepare("select * from organisation");
+$req->execute();
+while ($result=$req->fetch(PDO::FETCH_ASSOC))
+	$display.= "<option value=".$result['nom'].">". $result['nom']."</option>";
+
+$display.="</select> <br />";	
+
+}
 
 
 if(!empty($erreur))
@@ -71,7 +83,7 @@ else
 			Date de naissance (JJ MM AAAA): <input type="text" name="jour" /> - <input type="text" name="mois" /> - <input type="text" name="an" /> </br>
 			Numéro de sécurité sociale : <input type="text" name="numSS" /> </br></br></br>
 			Poste occupé : <input type="text" name="poste" /> </br>
-			Entreprise : <input type="text" name="firm" /> </br>
+			Entreprise : <?php echo $display; ?>
 			<input type="submit" value="Valider" name="submit" />
 			</p>
 
