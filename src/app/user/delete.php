@@ -11,6 +11,8 @@ if(!empty($_GET['id']))
 	}
 	else
 	{
+		$req=$db->prepare("DELETE FROM rendezVous WHERE utilisateur=?");
+		$req->execute(array($_GET['id']));
 		$req=$db->prepare("DELETE FROM utilisateur WHERE numSS=?");
 		$req->execute(array($_GET['id']));
 		header("Location: index.php?page=general/message&type=confirm&msg=L'utilisateur a bien été supprimé.&retour=user/list");
@@ -21,5 +23,3 @@ else
 {
 	header("Location: index.php?page=general/message&type=error&msg=Lien cassé. Veuillez en référer au responsable du site web.&retour=user/list");
 }
-
-?>

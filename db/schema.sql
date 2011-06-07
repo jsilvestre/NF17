@@ -60,6 +60,7 @@ CREATE TABLE rendezVous (
 	contact integer(15) NOT NULL,
 	annulation boolean,
 	lieu integer NOT NULL,
+	commentaire text,
 	
 	primary key(pkArtif),
 	unique(date_heure, utilisateur, contact, lieu), /* changement par rapport à eux : pour prendre en compte la correction du prof (contradictoire à deux endroits donc j'ai fait un choix)*/
@@ -68,7 +69,8 @@ CREATE TABLE rendezVous (
 	foreign key(lieu) references adresse(pkArtif)
 );
 
-/*
-- faire une vue utilisateur
-- faire une vue administrateur
-*/
+CREATE VIEW administrateur
+(numSS,login,nom,prenom,dateNaissance,mdp)
+AS SELECT numSS,login,nom,prenom,dateNaissance,mdp
+FROM utilisateur
+WHERE is_special = 1;

@@ -1,61 +1,72 @@
 <?php
-function check_cancel($chaine)
+function check_cancel($chaine) { return ($chaine == 0) ? "Maintenu" : "Annul√©"; }
+
+// initialisation des variables d'affichage
+$display="";
+$displayAction="";
+
+if(!empty($_GET['id'])) // on affiche les informations du rendez-vous en question
 {
-	if ($chaine==0)
-		return "non";
-	else 
-		return "oui";
-}
-		$display="";
-		$displayAction="";
-		// En cas de premiere page, on affiche la liste des utilisateurs dans la base de donnÈes
-		if(empty($_GET['id']))
-		{
-			$req=$db->prepare('SELECT login,numSS,nom,prenom from utilisateur ORDER BY login');
-			// Execution de la requete
-			$req->execute();
-			$display.="selectionnez l utilisateur dont vous voulez voir les rendez vous : </br>";
-			while($result = $req->fetch(PDO::FETCH_ASSOC))
-			{
-				$display.= '<a href="index.php?page=rdv/list&id='.$result['numSS'].'">'.$result['prenom'].' '.$result['nom'].' ('.$result['login'].')</a>';
-				$display.="<BR>";
-			}
-			$req->closeCursor();
-		// Affichage des actions possibles
-			$displayAction.= "<li><a href=\"index.php?page=./rdv/creation\">Creation d'un Rendez-vous</a></li>";
-		}
-		else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
-		{
-		$id = $_GET['id'];
-		$req=$db->prepare("select * from rendezVous r,adresse a,utilisateur u,contact c where utilisateur=? AND r.lieu=a.pkArtif AND u.numSS=? AND c.numSS=r.contact");
-		$req->execute(array($id,$id));
+	$id = $_GET['id'];
+	$req=$db->prepare("select u.prenom as prenomU,u.nom as nomU,u.numSS as numSSU,c.prenom as prenomC,c.nom as nomC,c.numSS as numSSC,a.nom_rue,a.cp,a.ville,a.numero,r.annulation,r.date_heure,r.commentaire,o.nom as nomO FROM rendezVous r, utilisateur u,contact c,organisation o,adresse a where r.pkArtif=? AND r.utilisateur=u.numSS AND c.numSS=r.contact AND c.organisation=o.nom AND a.pkArtif=r.lieu");
+	$req->execute(array($id));
+
+	while($result = $req->fetch(PDO::FETCH_ASSOC))
+	{
+		$display.='Utilisateur : <a href="index.php?page=user/list&id='.$result['numSSU'].'">'.$result['prenomU'].' '.$result['nomU'].'</a><br />';
+		$display.='Contact : <a href="index.php?page=contact/list&id='.$result['numSSC'].'">'.$result['prenomC'].' '.$result['nomC'].' ('.$result['nomO'].')</a><br />';
+		$display.="Date : ".strftime('%d/%m/%Y √† %R', strtotime($result['date_heure']))."</br>";
+		$display.="Statut : ".check_cancel($result['annulation'])."<br />";
+		$display.="Commentaire : ".$result['commentaire']."</br></br>";
 		
-		while($result = $req->fetch(PDO::FETCH_ASSOC))
-		{
-		$display.="Date du rendez-vous : ".$result['date_heure']."</br>";
-		// $display.="<p>  Heure du rendez vous : ".$result['']."</br>";
-		$display.="Utilisateur concernÈ : ".$result['prenom'].' '.$result['nom'].' ('.$result['login'].")</br>";
-		$display.="Contact concernÈ : ".$result['nom']."</br>";
-		$display.="Lieu : </br>";
+		$display.="<b>Lieu</b> </br>";
+		$display.="Num√©ro : ".$result['numero']."</br>";
 		$display.="Nom de rue : ".$result['nom_rue']."</br>";
-		
 		$display.="Code postal : ".$result['cp']."</br>";
-		$display.="Ville: ".$result['ville']."</br>";
-		$display.="AnnulÈ ? : ".check_cancel($result['annulation'])."<BR /><BR /><BR />";
-		//$display.= "'<a href="index.php?page=rdv/list&id='.$result['numSS'].'">'.$result['prenom'].' '.$result['nom'].' ('.$result['login'].')</a>';
-		}
-		
-		$display.="<a href=index.php?page=rdv/list> Retour </a>";
-		
-		// Affichage des actions possibles
-			$displayAction.= "<li><a href=index.php?page=./rdv/modif&id=".$id.">Modifier ce rendez-vous</a></li>";
-			$displayAction.= "<li><a href=index.php?page=./rdv/suprim&id=".$id.">Supprimer ce rendez-vous</a></li>";
-		}
-	?>
+		$display.="Ville : ".$result['ville']."</br>";
+	}
+
+	$display.="<br /><a href=index.php?page=rdv/list>Retour</a>";
+	
+	// Affichage des actions possibles
+	$displayAction.= "<li><a href=index.php?page=rdv/modify&id=".$id.">Modifier le rendez-vous</a></li>";
+	$displayAction.= "<li><a href=index.php?page=rdv/delete&id=".$id.">Supprimer le rendez-vous (/!\ irr√©versible)</a></li>";
+}
+else // on affiche la liste des rendez-vous
+{
+	$req=$db->prepare("select u.prenom as prenomU,u.nom as nomU,u.numSS as numSSU,c.prenom as prenomC,c.nom as nomC,c.numSS as numSSC,o.nom as nomO,r.annulation,r.date_heure,r.pkArtif from rendezVous r,utilisateur u,contact c,organisation o where r.utilisateur=u.numSS AND c.numSS=r.contact AND o.nom=c.organisation ORDER BY date_heure DESC");
+	$req->execute();
+	
+	$display.= '<table>
+					<tr>
+						<th>Date</th>
+						<th>Utilisateur</th>
+						<th>Contact</th>
+						<th>Statut</th>
+					</tr>';
+
+	while($result = $req->fetch(PDO::FETCH_ASSOC))
+	{
+		$display.='<tr>';
+		$display.='<td><a href="index.php?page=rdv/list&id='.$result['pkArtif'].'">'.strftime('%d/%m/%Y', strtotime($result['date_heure'])).' ('.strftime('%R', strtotime($result['date_heure'])).')</a></td>';
+		$display.='<td><a href="index.php?page=user/list&id='.$result['numSSU'].'">'.$result['prenomU'].' '.$result['nomU'].'</a></td>';
+		$display.='<td><a href="index.php?page=contact/list&id='.$result['numSSC'].'">'.$result['prenomC'].' '.$result['nomC'].' ('.$result['nomO'].')</td>';
+		$display.="<td>".check_cancel($result['annulation'])."</td>";
+		$display.='</tr>';
+	}
+	
+	$display.='</table>';
+	
+	$req->closeCursor();
+
+
+	$displayAction.= '<li><a href="index.php?page=rdv/creation">Cr√©ation d\'un Rendez-vous</a></li>';
+}
+?>
 
 <div id="wrapper">
 	<div class="box">
-		<h2>Accueil</h2>
+		<h2>Liste des rendez-vous (du plus r√©cent au plus ancien)</h2>
 		<p> <?php echo $display; ?>
 	</div>
 </div>
