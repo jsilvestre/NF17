@@ -8,13 +8,13 @@ $displayAction="";
 if(!empty($_GET['id'])) // on affiche les informations du rendez-vous en question
 {
 	$id = $_GET['id'];
-	$req=$db->prepare("select u.prenom as prenomU,u.nom as nomU,u.numSS as numSSU,c.prenom as prenomC,c.nom as nomC,c.numSS as numSSC,a.nom_rue,a.cp,a.ville,a.numero,r.annulation,r.date_heure,r.commentaire FROM rendezVous r, utilisateur u,contact c,organisation o,adresse a where r.pkArtif=? AND r.utilisateur=u.numSS AND c.numSS=r.contact AND c.organisation=o.nom AND a.organisation=o.nom");
+	$req=$db->prepare("select u.prenom as prenomU,u.nom as nomU,u.numSS as numSSU,c.prenom as prenomC,c.nom as nomC,c.numSS as numSSC,a.nom_rue,a.cp,a.ville,a.numero,r.annulation,r.date_heure,r.commentaire,o.nom as nomO FROM rendezVous r, utilisateur u,contact c,organisation o,adresse a where r.pkArtif=? AND r.utilisateur=u.numSS AND c.numSS=r.contact AND c.organisation=o.nom AND a.pkArtif=r.lieu");
 	$req->execute(array($id));
 
 	while($result = $req->fetch(PDO::FETCH_ASSOC))
 	{
 		$display.='Utilisateur : <a href="index.php?page=user/list&id='.$result['numSSU'].'">'.$result['prenomU'].' '.$result['nomU'].'</a><br />';
-		$display.='Contact : <a href="index.php?page=contact/list&id='.$result['numSSC'].'">'.$result['prenomC'].' '.$result['nomC'].'</a><br />';
+		$display.='Contact : <a href="index.php?page=contact/list&id='.$result['numSSC'].'">'.$result['prenomC'].' '.$result['nomC'].' ('.$result['nomO'].')</a><br />';
 		$display.="Date : ".strftime('%d/%m/%Y à %R', strtotime($result['date_heure']))."</br>";
 		$display.="Statut : ".check_cancel($result['annulation'])."<br />";
 		$display.="Commentaire : ".$result['commentaire']."</br></br>";
