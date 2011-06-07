@@ -41,15 +41,16 @@ CREATE TABLE organisation (
 
 CREATE TABLE adresse (
 	pkArtif serial,
-	numero integer(2),
+	numero integer(2) NOT NULL,
 	nom_rue varchar(35) NOT NULL,
 	cp integer(5) NOT NULL,
 	ville varchar(35) NOT NULL,
-	organisation varchar(50),
+	organisation varchar(50) NOT NULL,
 	
 	primary key(pkArtif),
-	unique(numero,nom_rue,cp,ville,organisation),
-	foreign key(organisation) references organisation(nom)	
+	foreign key(organisation) references organisation(nom),
+	
+	unique(numero,nom_rue,cp,ville,organisation)
 );
 
 CREATE TABLE rendezVous (
