@@ -21,18 +21,28 @@
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
-		$req=$db->prepare("select * from organisation o, adresse a where o.nom=? AND a.organisation=o.nom");
+		$req=$db->prepare("select * from organisation o LEFT JOIN adresse a ON o.nom=a.organisation where o.nom=?");
 		$req->execute(array($_GET['id']));
 		$result = $req->fetch(PDO::FETCH_ASSOC);
 		$display.= "Nom : ".$result['nom']."<br />" ;
+		if ($result['nom_rue']==NULL AND $result['nom_rue']==NULL AND $result['cp']==NULL AND $result['ville']==NULL) //&& !$result['ville'] && !$result['cp'])// On vérifie si une adresse est en relation avec l' organisation
+		{
+			$display.="<br />Aucune adresse répertioriée <br /><br />";
+		}
+		else 
+		{			
 		// Adresse
-		$display.="Adresse : <br />";
-		$display.= "	Nom de la rue : ".$result['nom_rue']."<br />" ;
-		$display.= "	Code postal : ".$result['cp']."<br />" ;
-		$display.= "	Ville : ".$result['ville']."<br /><br /> <br /><br />" ;
-		$display.= '<a href="index.php?page=firm/list"> Retour </a>';
-		
-		$displayAction.='<li><a href="index.php?page=firm/modify&id='.$result['nom'].'">Modifier l\'organisation</a></li>';
+			$display.="Adresse : <br />";
+			$display.= "	Nom de la rue : ".$result['nom_rue']."<br />" ;
+			$display.= "	Code postal : ".$result['cp']."<br />" ;
+			$display.= "	Ville : ".$result['ville']."<br /><br /> <br /><br />" ;
+			$display.= '<a href="index.php?page=firm/list"> Retour </a>';
+			
+		}
+		$displayAction.='<li><a href="index.php?page=firm/modify&id='.$result['nom'].'">Modifier le nom de l\'organisation</a></li>';
+		$displayAction.='<li><a href="index.php?page=firm/creationAdr&id='.$result['nom'].'">Ajouter une adresse</a></li>';
+		$displayAction.='<li><a href="index.php?page=firm/modifyAdr&id='.$result['nom'].'">Modifier une adresse</a></li>';
+		$displayAction.='<li><a href="index.php?page=firm/deleteAdr&id='.$result['nom'].'">Supprimer une adresse</a></li>';
 		$displayAction.='<li><a href="index.php?page=firm/delete&id='.$result['nom'].'">Supprimer l\'organisation</a></li>';
 	}
 ?>
