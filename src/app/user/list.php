@@ -28,7 +28,7 @@ function readAdmin($value) { return ($value) ? "Oui" : "Non"; }
 		$display.= "Nom d'utilisateur : ".$result['login']."<br />";
 		$display.= "Nom  : ".$result['nom']."<br />";
 		$display.= "Prénom : ".$result['prenom']."<br />";
-		$display.= "Date de naissance : ".$result['dateNaissance']."<br />";
+		$display.= "Date de naissance : ".strftime('%d/%m/%Y', strtotime($result['dateNaissance']))."<br />";
 		$display.= "Numero de securite sociale : ".$result['numSS']."<br />";
 		$display.= "Administrateur ? ".readAdmin($result['is_special'])."<br /><br />";
 		$display.= '<a href="index.php?page=user/list">Retour </a>';

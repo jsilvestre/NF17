@@ -73,11 +73,11 @@ if(!empty($_GET['id']) || !empty($_POST['numSS']))
 		$result = $req->fetch(PDO::FETCH_ASSOC);
 		
 		$is_special = ($result['is_special'] == 1) ? 'checked="checked"' : '';
-		$jour = 1;
-		$mois = 2;
-		$an = 3;
+		$timestamp = strtotime($result['dateNaissance']);
+		$jour = date("d",$timestamp);
+		$mois = date("m",$timestamp);
+		$an = date("Y",$timestamp);
 	}
-
 }
 else
 {

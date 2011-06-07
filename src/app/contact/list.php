@@ -24,7 +24,7 @@
 		$result = $req->fetch(PDO::FETCH_ASSOC);
 		$display.= "Nom  : ".$result['nom']."<br />";
 		$display.= "Prénom : ".$result['prenom']."<br />";
-		$display.= "Date de naissance : ".$result['dateNaissance']."<br />";
+		$display.= "Date de naissance : ".strftime('%d/%m/%Y', strtotime($result['dateNaissance']))."<br />";
 		$display.= "Numero de securite sociale : ".$result['numSS']."<br />";
 		$display.= "Organisation :".$result['organisation']."<br />";
 		$display.= "Numero de securite sociale : ".$result['poste']."<br /><br />";
