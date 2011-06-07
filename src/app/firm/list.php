@@ -25,24 +25,37 @@
 		$req->execute(array($_GET['id']));
 		$result = $req->fetch(PDO::FETCH_ASSOC);
 		$display.= "Nom : ".$result['nom']."<br />" ;
-		if ($result['nom_rue']==NULL AND $result['nom_rue']==NULL AND $result['cp']==NULL AND $result['ville']==NULL) //&& !$result['ville'] && !$result['cp'])// On vérifie si une adresse est en relation avec l' organisation
+		if ($result['nom_rue']==NULL AND $result['nom_rue']==NULL AND $result['cp']==NULL AND $result['ville']==NULL) 
 		{
 			$display.="<br />Aucune adresse répertioriée <br /><br />";
 		}
 		else 
-		{			
-		// Adresse
-			$display.="Adresse : <br />";
-			$display.= "	Nom de la rue : ".$result['nom_rue']."<br />" ;
-			$display.= "	Code postal : ".$result['cp']."<br />" ;
-			$display.= "	Ville : ".$result['ville']."<br /><br /> <br /><br />" ;
-			$display.= '<a href="index.php?page=firm/list"> Retour </a>';
-			
+		{	
+			// Creation du tableau contenant les adresses
+			$display.= '<table>
+					<tr>
+						<th>Code postal</th>
+						<th>Ville</th>
+						<th>Rue</th>
+					</tr>';
+			$req2=$db->prepare('select * from adresse WHERE organisation=?');
+			$req2->execute(array($result['nom']));
+			while($result2 = $req2->fetch(PDO::FETCH_ASSOC))
+			{
+				$display.='<tr>';
+				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'. $result2['cp'].'</a></td>';
+				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'.$result2['ville'].'</a></td>';
+				$display.='<td><a href="index.php?page=adr/list&id='.$result2['pkArtif'].'">'.$result2['nom_rue'].'</td>';
+				$display.='</tr>';
+			}
+		$display.='</table>';
+		$req2->closeCursor();
+		$req->closeCursor();
 		}
+
+	
 		$displayAction.='<li><a href="index.php?page=firm/modify&id='.$result['nom'].'">Modifier le nom de l\'organisation</a></li>';
 		$displayAction.='<li><a href="index.php?page=firm/creationAdr&id='.$result['nom'].'">Ajouter une adresse</a></li>';
-		$displayAction.='<li><a href="index.php?page=firm/modifyAdr&id='.$result['nom'].'">Modifier une adresse</a></li>';
-		$displayAction.='<li><a href="index.php?page=firm/deleteAdr&id='.$result['nom'].'">Supprimer une adresse</a></li>';
 		$displayAction.='<li><a href="index.php?page=firm/delete&id='.$result['nom'].'">Supprimer l\'organisation</a></li>';
 	}
 ?>
