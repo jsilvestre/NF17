@@ -15,7 +15,7 @@ if(!empty($_GET['id'])) // on affiche les informations du rendez-vous en questio
 	{
 		$display.='Utilisateur : <a href="index.php?page=user/list&id='.$result['numSSU'].'">'.$result['prenomU'].' '.$result['nomU'].'</a><br />';
 		$display.='Contact : <a href="index.php?page=contact/list&id='.$result['numSSC'].'">'.$result['prenomC'].' '.$result['nomC'].' ('.$result['nomO'].')</a><br />';
-		$display.="Date : ".strftime('%d/%m/%Y à %R', strtotime($result['date_heure']))."</br>";
+		$display.="Date : ".strftime('%d/%m/%Y à %H:%M', strtotime($result['date_heure']))."</br>";
 		$display.="Statut : ".check_cancel($result['annulation'])."<br />";
 		$display.="Commentaire : ".$result['commentaire']."</br></br>";
 		
@@ -51,7 +51,7 @@ else // on affiche la liste des rendez-vous
 	while($result = $req->fetch(PDO::FETCH_ASSOC))
 	{
 		$display.='<tr>';
-		$display.='<td><a href="index.php?page=rdv/list&id='.$result['pkArtif'].'">'.strftime('%d/%m/%Y', strtotime($result['date_heure'])).' ('.strftime('%R', strtotime($result['date_heure'])).')</a></td>';
+		$display.='<td><a href="index.php?page=rdv/list&id='.$result['pkArtif'].'">'.strftime('%d/%m/%Y', strtotime($result['date_heure'])).' ('.strftime('%H:%M', strtotime($result['date_heure'])).')</a></td>';
 		$display.='<td><a href="index.php?page=user/list&id='.$result['numSSU'].'">'.$result['prenomU'].' '.$result['nomU'].'</a></td>';
 		$display.='<td><a href="index.php?page=contact/list&id='.$result['numSSC'].'">'.$result['prenomC'].' '.$result['nomC'].' ('.$result['nomO'].')</td>';
 		$display.="<td>".check_cancel($result['annulation'])."</td>";
