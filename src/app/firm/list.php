@@ -2,6 +2,7 @@
 
 	// initialise la variable d'affichage
 	$display = '';
+	$displayAction='';
 
 	// En cas de premiere page, on affiche la liste des utilisateurs dans la base de données
 	if(empty($_GET['id']))
@@ -15,6 +16,8 @@
 			$display.= "<br />";
 		}
 		$req->closeCursor();
+		
+		$displayAction.="<li><a href='index.php?page=firm/creation'>Creer une organisation</a></li>";
 	}
 	else // Si un utilisateur a ete selectionne, on affiche la liste des informations le concernant
 	{
@@ -28,6 +31,9 @@
 		$display.= "	Code postal : ".$result['cp']."<br />" ;
 		$display.= "	Ville : ".$result['ville']."<br /><br /> <br /><br />" ;
 		$display.= '<a href="index.php?page=firm/list"> Retour </a>';
+		
+		$displayAction.='<li><a href="index.php?page=firm/modify&id='.$result['nom'].'">Modifier l\'organisation</a></li>';
+		$displayAction.='<li><a href="index.php?page=firm/delete&id='.$result['nom'].'">Supprimer l\'organisation</a></li>';
 	}
 ?>
 
@@ -41,6 +47,6 @@
 <div id="action">
 	<h2>Actions possibles</h2>
 	<ul>
-		<li><a href="index.php?page=firm/creation">Création Organisation</a></li>
+		<?php echo $displayAction; ?>
 	</ul>
 </div>

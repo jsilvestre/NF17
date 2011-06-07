@@ -3,7 +3,7 @@
 */
 USE `NF17`;
 
-FLUSH TABLES /* évite certains bugs à la création du schéma */
+FLUSH TABLES; /* évite certains bugs à la création du schéma */
 
 DROP TABLE IF EXISTS rendezVous;
 DROP TABLE IF EXISTS adresse;
