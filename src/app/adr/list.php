@@ -11,7 +11,7 @@
 		$result = $req->fetch(PDO::FETCH_ASSOC);
 		$display.= "Code postal : ".$result['cp']."<br />";
 		$display.= "Ville  : ".$result['ville']."<br />";
-		$display.= "Rue : ".$result['nom_rue']."<br /><br />";
+		$display.= "adresse : ".$result['numero'].",".$result['nom_rue']."<br /><br />";
 		$display.= '<a href="index.php?page=firm/list">Retour </a>';
 	}
 	else

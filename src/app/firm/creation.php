@@ -66,6 +66,6 @@ else
 	<h2>Actions possibles</h2>
 	<ul><?php if(!empty($_SESSION['id']) && $_SESSION['isAdmin']) { ?>
 		<li><a href="index.php?page=firm/creation">Créer une organisation</a></li>
-		<?php } else echo "Aucune action possible"; } ?>
+		<?php } else echo "Aucune action possible";  ?>
 	</ul>
 </div>

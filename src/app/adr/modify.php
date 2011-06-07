@@ -5,22 +5,23 @@ $success = false;
 if(!empty($_POST['submit'])) // si le formulaire a été validé
 {
 	// Récuperation des variables
-	if(!empty($_POST['rue']) && !empty($_POST['key']) && !empty($_POST['ville']) && !empty($_POST['cp']))
+	if(!empty($_POST['rue']) && !empty($_POST['key']) && !empty($_POST['ville']) && !empty($_POST['cp']) && !empty($_POST['numero']))
 	{
+		$numero=$_POST['numero'];
 		$key=$_POST['key'];
 		$cp=$_POST['cp'];
 		$ville=$_POST['ville'];
 		$rue=$_POST['rue'];
 
-		$req=$db->prepare("select * from adresse where cp=? AND nom_rue=? AND ville=?");
-		$req->execute(array($cp,$rue,$ville));	
+		$req=$db->prepare("select * from adresse where cp=? AND nom_rue=? AND ville=? AND numero=?");
+		$req->execute(array($cp,$rue,$ville,$numero));	
 		
 		if($req->rowCount() == 0)
 		{
 			// Création de la requete
-			$req=$db->prepare("UPDATE adresse SET nom_rue=?,cp=?,ville=? WHERE pkArtif=?");
+			$req=$db->prepare("UPDATE adresse SET nom_rue=?,cp=?,ville=?,numero=? WHERE pkArtif=?");
 			// Exécution de la requete
-			$req->execute(array($rue,$cp,$ville,$key));
+			$req->execute(array($rue,$cp,$ville,$numero,$key));
 			$req->closeCursor();
 				
 			header('Location: index.php?page=general/message&type=confirm&msg=L\'adresse a bien été modifié.&retour=firm/list');
@@ -80,6 +81,7 @@ else
 				<p>Code postal : <input type="text" name="cp" value="<?php echo $result['cp']; ?>"/><br />  <input type="hidden" name="key" value="<?php echo $result['pkArtif']; ?>"/>
 				Ville : <input type="text" name="ville" value="<?php echo $result['ville']; ?>" /><br />
 				Nom de rue : <input type="text" name="rue" value="<?php echo $result['nom_rue']; ?>"/><br />
+				Numero : <input type="text" name="numero" value="<?php echo $result['numero']; ?>"/><br />
 				<input type="submit" value="Valider" name="submit" />
 				</p>
 		</form>

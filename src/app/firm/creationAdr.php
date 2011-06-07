@@ -5,20 +5,21 @@ $success = false;
 if(!empty($_POST['submit'])) // si le formulaire a été validé
 {
 	// Récuperation des variables
-	if(!empty($_POST['cp']) && !empty($_POST['ville']) && !empty($_POST['rue']) && !empty($_POST['nom']))  //  <-----   LE PROBLEME DOIT ETRE ICI JE PENSE 
+	if(!empty($_POST['cp']) && !empty($_POST['ville']) && !empty($_POST['rue']) && !empty($_POST['nom']) && !empty($_POST['num']))  //  <-----   LE PROBLEME DOIT ETRE ICI JE PENSE 
 	{
+		$num=$_POST['num'];
 		$rue=$_POST['rue'];
 		$ville=$_POST['ville'];
 		$cp=$_POST['cp'];
 		$nom=$_POST['nom'];
 		
-		$req=$db->prepare("select * from adresse where nom_rue=? AND cp=? AND ville=?");
-		$req->execute(array($rue,$cp,$ville));
+		$req=$db->prepare("select * from adresse where nom_rue=? AND cp=? AND ville=? AND numero=?");
+		$req->execute(array($rue,$cp,$ville,$num));
 		if ($req->rowCount()==0)
 		{
 			// Création de la requete
-			$req=$db->prepare('INSERT INTO adresse (nom_rue,cp,ville,organisation) VALUES(?,?,?,?)');
-			$req->execute(array($rue,$cp,$ville,$nom));
+			$req=$db->prepare('INSERT INTO adresse (nom_rue,cp,ville,organisation,numero) VALUES(?,?,?,?,?)');
+			$req->execute(array($rue,$cp,$ville,$nom,$num));
 			// Exécution de la requete
 			$req->closeCursor();
 				
@@ -61,7 +62,8 @@ else
 		<h2>Fenêtre principale</h2>
 		<?php echo $erreur; ?>
 		<form method="post" action="index.php?page=firm/creationAdr">
-				<p> Rue : <input type="text" name="rue"/> <br /> <input type="hidden" name="nom" value="<?php echo $nom; ?>"/>
+				<p> Numero : <input type="text" name="num"/> <br />
+				Rue : <input type="text" name="rue"/> <br /> <input type="hidden" name="nom" value="<?php echo $nom; ?>"/>
 				code postal : <input type="text" name="cp"/> <br />
 				Ville : <input type="text" name="ville"/> <br /><br />
 				<input type="submit" value="Valider" name="submit" />

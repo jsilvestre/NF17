@@ -31,6 +31,7 @@ if(!empty($_GET['id'])) // on affiche les informations du rendez-vous en questio
 	// Affichage des actions possibles
 	if(!empty($_SESSION['id']) && $_SESSION['isAdmin'])
 	{
+		$displayAction.= "<li><a href=index.php?page=rdv/cancel&id=".$id.">Annuler le rendez-vous</a></li>";
 		$displayAction.= "<li><a href=index.php?page=rdv/modify&id=".$id.">Modifier le rendez-vous</a></li>";
 		$displayAction.= "<li><a href=index.php?page=rdv/delete&id=".$id.">Supprimer le rendez-vous (/!\ irréversible)</a></li>";
 	}
